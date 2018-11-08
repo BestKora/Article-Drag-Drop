@@ -1,0 +1,35 @@
+//
+//  ImageGallery.swift
+//  ImageGallery
+//
+//  Created by Tatiana Kornilova on 19/06/2018.
+//  Copyright © 2018 Stanford University. All rights reserved.
+//
+
+import Foundation
+
+struct ImageModel: Codable {
+    var url: URL
+    var aspectRatio: Double
+}
+
+struct ImageGallery: Codable {
+    var images = [ImageModel]()
+    var json: Data? {
+        return try? JSONEncoder().encode(self)
+    }
+    
+    init?(json: Data) {
+        if let newValue =
+            try? JSONDecoder().decode(ImageGallery.self, from: json) {
+            self = newValue
+        } else {
+            return nil
+        }
+    }
+    
+    init (){
+        self.images = [ImageModel]()
+    }
+}
+
